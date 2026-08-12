@@ -217,6 +217,38 @@ textAlign: 'center',
 
 blank: {
 fontSize: 0
+},
+
+radioContainer: {
+  flex: 0, 
+  backgroundColor: '#ff66b3',
+  justifyContent: 'center',
+  alignItems: 'center'
+},
+
+radioButton: {
+  flexDirection: 'row',
+  alignItems: 'center'
+},
+
+radioLabel: {
+  marginLeft: 5,
+  fontSize: 15,
+  color: 'Black'
+},
+
+radioGroup: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  marginTop: 20,
+  borderRadius: 10,
+  backgroundColor: '#ffe6f2',
+  padding: 15,
+  elevation: 5,
+  
+
+
 }
 
 });
