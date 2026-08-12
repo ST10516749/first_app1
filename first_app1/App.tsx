@@ -246,9 +246,13 @@ radioGroup: {
   backgroundColor: '#ffe6f2',
   padding: 15,
   elevation: 5,
-  
-
-
+  shadowColor: '#4d001f',
+  shadowOffset: (
+    width: 0,
+    height: 1,
+  ),
+  shadowOpacity: 0.25,
+  shadowRadius: 3,
 }
 
 });
