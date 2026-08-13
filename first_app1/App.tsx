@@ -50,15 +50,15 @@ function MainScreen({navigation}: MainScreenProps) {
 const [Name, setName] = useState(''); // "Variable" for the text input field for the name
 const [Surname, setSurname] = useState('');
 const [Error, setError] = useState(false); // "Variable" for the text input field for the surname
+const [SelectedValue, setSelectedvalue] = useState('0');
 
 
 console.log("App is running");
 
 return (
 <View> // A View for the style, it has a view inside of a view, the first view is for the style and the second view is for the text input field
-<SafeAreaView>
-<ScrollView>
 
+<view> </view>
 
 // Image added in the app
 <Image style={styles.mainImage}
