@@ -63,7 +63,7 @@ function MainScreen({navigation}: MainScreenProps) {
   
      // Image added in the app
       <Image style={styles.mainImage} 
-      source={require('./_images/minecraft.jpg')}/>
+      source={require('./_images/image_aj.jpg')}/>
       <Text style={styles.welcomeText}>Welcome to my App!</Text>
 
 
@@ -198,17 +198,19 @@ function ViewDetails( {navigation, route}: ViewDetailsProps) {
                     setImage:(undefined);
 
                 }
-               
-               
 
                }}
                />
+               
+               <View style={styles.container}>
+                  <Image source={ ImageBlock } style={styles.viewImage}></Image>
+               </View>
+
+               </View>
            </View>
           </View>
          </View>
         </View>
-    </View>
-
    
   );
 };
@@ -331,6 +333,18 @@ radioGroup: {
   },
   shadowOpacity: 0.25,                                      //minimum 0, max is 1 of opacity
   shadowRadius: 3
+},
+
+container: {
+   width: 350,
+   height: 350,
+   alignContent: 'center'
+},
+
+viewImage: {
+   width: 350,
+   height: 350,
+   alignContent: 'center'
 }
 
 });
