@@ -7,12 +7,14 @@ import { RadioButton} from 'react-native-paper';
 
 
 
+
  type RootStackParamList = {
    Home: undefined;
    ViewDetails: {
     NameSend: string;
     SurnameSend: string; 
   };
+  ListSkills: undefined;
  };
   
 
@@ -28,13 +30,19 @@ RootStackParamList,
 'ViewDetails'
 >;
 
-export default function App() {
+type ListSkillsProps = NativeStackScreenProps<
+RootStackParamList,
+'ListSkills'
+>;
+
+export default function App({ }) {
 return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="home">
         <Stack.Screen name="Home" component={MainScreen} />
         <Stack.Screen name="ViewDetails" component={ViewDetails} 
         options={{ animation: 'slide_from_bottom' }} />
+        <Stack.Screen name="ListSkills" component={ListSkills}/>
       </Stack.Navigator>  
     </NavigationContainer>
   );
@@ -126,10 +134,27 @@ function MainScreen({navigation}: MainScreenProps) {
 //ViewDetails Function, this is the second screen that will be displayed when the button is pressed
 
 function ViewDetails( {navigation, route}: ViewDetailsProps) {
+
   const NameGet = route.params.NameSend;
   const SurnameGet = route.params.SurnameSend;
+
+const [blockArray] = useState,<ImageSourcePropType[]>(["","","",""
+  undefined,
+  require('./_images/kotlin logo.jpg'),
+  require('./_images/python logo.jpg'),
+  require('./_images/RN logo.jpg'),
+]);
+
+  // blockArray[0] = ('');
+  // blockArray[1] = require('./_images/kotlin logo.jpg');
+  // blockArray[2] = require('./_images/python logo.jpg');
+  // blockArray[3] = require('./_images/RN logo.jpg');
+
+
+
+  const[iSelected, setIntValue] = useState(0);
   const [selectedValue, setSelectedValue] = useState('0');
-  const [ImageBlock, setImage] = useState<ImageSourcePropType | undefined>(undefined);
+  // const [ImageBlock, setImage] = useState<ImageSourcePropType | undefined>(undefined);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -183,27 +208,29 @@ function ViewDetails( {navigation, route}: ViewDetailsProps) {
           <Button title="Click Me!"
                onPress={() =>{
 
-                switch(selectedValue){
-                  case "1":
-                    setImage(require('./_images/kotlin logo.jpg'));
-                    break;
-                  
-                  case "2": 
-                    setImage(require('./_images/python logo.jpg'));
-                    break;
-                  case "2": 
-                    setImage(require('./_images/RN logo.jpg'));
-                    break;
-                  default: 
-                    setImage:(undefined);
+                setIntValue(Number[selectedValue]);
 
-                }
+                // switch(selectedValue){
+                //   case "1":
+                //     setImage(require('./_images/kotlin logo.jpg'));
+                //     break;
+                  
+                //   case "2": 
+                //     setImage(require('./_images/python logo.jpg'));
+                //     break;
+                //   case "2": 
+                //     setImage(require('./_images/RN logo.jpg'));
+                //     break;
+                //   default: 
+                //     setImage:(undefined);
+
+                // }
 
                }}
                />
                
                <View style={styles.container}>
-                  <Image source={ ImageBlock } style={styles.viewImage}></Image>
+                  <Image source={ blockArray } style={styles.viewImage}></Image>
                </View>
 
                </View>
@@ -214,6 +241,19 @@ function ViewDetails( {navigation, route}: ViewDetailsProps) {
    
   );
 };
+
+function ListSkills({navigation, route}: ListSkillsProps){
+  return(
+    <View>
+      <SafeAreaView>
+        <ScrollView>
+          
+        </ScrollView>
+      </SafeAreaView>
+
+    </View>
+  )
+}
 
 function isEmpty(value : any){
   return(
@@ -348,4 +388,5 @@ viewImage: {
 }
 
 });
+
 
