@@ -247,7 +247,8 @@ function ListSkills({navigation, route}: ListSkillsProps){
     <View>
       <SafeAreaView>
         <ScrollView>
-          
+
+          d
         </ScrollView>
       </SafeAreaView>
 
