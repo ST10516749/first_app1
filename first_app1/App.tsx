@@ -243,12 +243,18 @@ const [blockArray] = useState,<ImageSourcePropType[]>(["","","",""
 };
 
 function ListSkills({navigation, route}: ListSkillsProps){
+  const [txtSkill, setSkill] = useState('');
+
   return(
-    <View>
+    <View style={styles.appContainer}>
       <SafeAreaView>
         <ScrollView>
+<View style={styles.mainImage}>
+  <Image style={styles.bannerImg} source={require('./_images/banner.jpg')}/>
+  </View>       
 
-          d
+  <Text style={styles.welcomeText}>List your skills</Text>   
+
         </ScrollView>
       </SafeAreaView>
 
@@ -386,8 +392,55 @@ viewImage: {
    width: 350,
    height: 350,
    alignContent: 'center'
-}
+},
+
+bannerImg: {
+ height: 350,
+ alignContent: 'center',
+},
+ 
+inputContainer: {
+ flex:1,
+ flexDirection: 'row',
+ justifyContent: 'space-between',
+ alignItems: 'center',
+ marginBottom: 25,
+ borderBottomWidth: 1,
+ borderBottomColor: '#0000',
+},
+
+textInput: {
+  borderWidth: 1,
+  borderColor: '#0000',
+  width: '70%',
+  margin:10,
+  padding: 5,
+},
+
+appContainer: {
+  flex: 1,
+  padding: 50,
+  paddingHorizontal: 15,
+},
+
+skillcontainer: {
+  flex: 5,
+},
+
+skillTest: {
+  fontSize: 15,
+  marginVertical: 5,
+  borderBlockColor: 'black',
+  borderBottomWidth: 1,
+},
 
 });
+
+
+
+
+
+
+
 
 
