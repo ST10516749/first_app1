@@ -4,11 +4,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useState, useRef, useEffect, ReactNode } from 'react';
 import { RadioButton} from 'react-native-paper';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 
 
 
-
- type RootStackParamList = {
+ type TabParamList = {
    Home: undefined;
    ViewDetails: {
     NameSend: string;
@@ -18,32 +19,39 @@ import { RadioButton} from 'react-native-paper';
  };
   
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createMaterialTopTabNavigator<TabParamList>();
 
-type MainScreenProps = NativeStackScreenProps<
-RootStackParamList,
+type MainScreenProps = MaterialTopTabScreenProps<
+TabParamList,
 'Home'
 >;
 
-type ViewDetailsProps = NativeStackScreenProps<
-RootStackParamList,
+type ViewDetailsProps =  MaterialTopTabScreenProps<
+TabParamList,
 'ViewDetails'
 >;
 
-type ListSkillsProps = NativeStackScreenProps<
-RootStackParamList,
+type ListSkillsProps =  MaterialTopTabScreenProps<
+TabParamList,
 'ListSkills'
 >;
 
-export default function App({ }) {
+
+
+export default function App() {
 return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="home">
-        <Stack.Screen name="Home" component={MainScreen} />
-        <Stack.Screen name="ViewDetails" component={ViewDetails} 
-        options={{ animation: 'slide_from_bottom' }} />
-        <Stack.Screen name="ListSkills" component={ListSkills}/>
-      </Stack.Navigator>  
+      <Tab.Navigator screenOptions={{ tabBarStyle: { marginTop: 70,},}}>
+        <Tab.Screen name="Home" component={MainScreen}/>
+        <Tab.Screen
+        name="ViewDetails"
+        component={ViewDetails}
+        initialParams={{
+          NameSend: '',
+          SurnameSend: ''
+        }} />
+        <Tab.Screen name="ListSkills" component={ListSkills}/>
+       </Tab.Navigator> 
     </NavigationContainer>
   );
   
@@ -64,18 +72,18 @@ function MainScreen({navigation}: MainScreenProps) {
   console.log("App is running");
   
   return (
-  <View>                       // A View for the style, it has a view inside of a view, the first view is for the style and the second view is for the text input field
+     // A View for the style, it has a view inside of a view, the first view is for the style and the second view is for the text input field
+  <View>                      
     <SafeAreaView>
      <ScrollView>
-
+{/* // Image added in the app*/}
   
-     // Image added in the app
+     
       <Image style={styles.mainImage} 
-      source={require('./_images/image_aj.jpg')}/>
+      source={require('./_images/minecraft.jpg')}/>
       <Text style={styles.welcomeText}>Welcome to my App!</Text>
 
-
-// A view for the style, this is inside the first view 
+{/*// A view for the style, this is inside the first view  */}
 <FadeInView>
     <View style={styles.inputFlex}>
       <Text style={styles.labelText}>Enter your name:</Text>
@@ -114,8 +122,7 @@ function MainScreen({navigation}: MainScreenProps) {
 
 
 </FadeInView>
-
-// In line error, a quicker way for the error
+{/*// In line error, a quicker way for the error */}
 <Text style={Error? styles.errorRed : styles.blank}>
 {Error? "Please fill in all fields!" : ""}
 </Text>
@@ -134,32 +141,28 @@ function MainScreen({navigation}: MainScreenProps) {
 //ViewDetails Function, this is the second screen that will be displayed when the button is pressed
 
 function ViewDetails( {navigation, route}: ViewDetailsProps) {
+  const NameGet = route.params?.NameSend;
+  const SurnameGet = route.params?.SurnameSend;
 
-  const NameGet = route.params.NameSend;
-  const SurnameGet = route.params.SurnameSend;
 
-const [blockArray] = useState,<ImageSourcePropType[]>(["","","",""
-  undefined,
-  require('./_images/kotlin logo.jpg'),
-  require('./_images/python logo.jpg'),
-  require('./_images/RN logo.jpg'),
+  
+  const [blockArray] = useState<ImageSourcePropType[]>([
+    undefined,
+
+  require('./_images/react-native.png'),
+  require ('./_images/python.jpg'),
+  require('./_images/kotlin.png'),
 ]);
 
-  // blockArray[0] = ('');
-  // blockArray[1] = require('./_images/kotlin logo.jpg');
-  // blockArray[2] = require('./_images/python logo.jpg');
-  // blockArray[3] = require('./_images/RN logo.jpg');
-
-
-
-  const[iSelected, setIntValue] = useState(0);
+  const [iSelected, setIntValue] = useState(0);
   const [selectedValue, setSelectedValue] = useState('0');
   // const [ImageBlock, setImage] = useState<ImageSourcePropType | undefined>(undefined);
+  
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', paddingTop: 50}}>
       <View style={{ flex: 0, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{fontWeight: 'bold', fontSize: 20}}>Hello {NameGet} {SurnameGet} !</Text>
+      <Text style={{fontWeight: 'bold', fontSize: 20, }}>Hello {NameGet} {SurnameGet} !</Text>
       <Text>Please select a language:</Text>
       </View>
 
@@ -173,7 +176,7 @@ const [blockArray] = useState,<ImageSourcePropType[]>(["","","",""
             onPress={(() => setSelectedValue("1"))}
             color="#ff66b3"
             />
-             <Text style={styles.radioLabel}>Python</Text>
+             <Text style={styles.radioLabel}>React Native</Text>
 
           </View>
 
@@ -185,7 +188,7 @@ const [blockArray] = useState,<ImageSourcePropType[]>(["","","",""
             onPress={(() => setSelectedValue("2"))}
             color="#e0f333"
             />
-            <Text style={styles.radioLabel}>React Native</Text>
+            <Text style={styles.radioLabel}>Python</Text>
             
 
           </View>
@@ -199,66 +202,101 @@ const [blockArray] = useState,<ImageSourcePropType[]>(["","","",""
             color="#644ff0"
             />
              <Text style={styles.radioLabel}>Kotlin</Text>
+               </View>
+             </View>
 
            <View style={{flex: 1}}> 
             <Text style={{fontWeight: "bold", flex: 0, paddingTop: 30, 
               justifyContent: 'center', textAlign: 'center', alignItems: 'center'}}>
             </Text>
-          
-          <Button title="Click Me!"
+           <Button title="Click Me!"
                onPress={() =>{
 
-                setIntValue(Number[selectedValue]);
-
+                setIntValue(Number(selectedValue));
+               
                 // switch(selectedValue){
                 //   case "1":
-                //     setImage(require('./_images/kotlin logo.jpg'));
-                //     break;
-                  
-                //   case "2": 
-                //     setImage(require('./_images/python logo.jpg'));
+                //     setImage(require('./_images/react-native.png'));
                 //     break;
                 //   case "2": 
-                //     setImage(require('./_images/RN logo.jpg'));
+                //     setImage(require('./_images/python.jpg')); 
                 //     break;
-                //   default: 
-                //     setImage:(undefined);
-
+                //   case "3":
+                //     setImage(require('./_images/kotlin.png')); 
+                //     break;
+                //   default:
+                //     setImage(undefined);  
                 // }
-
                }}
                />
-               
                <View style={styles.container}>
-                  <Image source={ blockArray } style={styles.viewImage}></Image>
+                  <Image source={blockArray[iSelected]} style={styles.viewImage}></Image>
                </View>
 
-               </View>
            </View>
           </View>
          </View>
-        </View>
+
    
   );
 };
 
-function ListSkills({navigation, route}: ListSkillsProps){
+function ListSkills({ navigation, route}: ListSkillsProps) {
+
+  const [Skills] = useState<string[]>([]);
   const [txtSkill, setSkill] = useState('');
+
+  const renderSkills = () => {
+
+  const arrOutput = [];
+  
+
+  for(let i=0; i < Skills.length; i++){
+    arrOutput.push(
+      <Text key={i} style={styles.skillText}>
+        {Skills[i]}
+        </Text>
+    );
+  }
+  return arrOutput;
+  }
 
   return(
     <View style={styles.appContainer}>
       <SafeAreaView>
         <ScrollView>
-<View style={styles.mainImage}>
-  <Image style={styles.bannerImg} source={require('./_images/banner.jpg')}/>
-  </View>       
+<View style={styles.bannerContainer}>
+  <Image 
+    style={styles.bannerImg} 
+    source={require('./_images/banner.jpg')}
+  />
+</View>
 
-  <Text style={styles.welcomeText}>List your skills</Text>   
+    <Text style={styles.welcomeText}>List Your Skills</Text>
+    <View style={styles.inputContainer}>
+      <TextInput style={styles.textInput} placeholder="Enter your Skills"
+                 onChangeText={newText => setSkill(newText)}
+                 value={txtSkill}
+      
+      />
 
-        </ScrollView>
-      </SafeAreaView>
+      <Button title="Add Skill"
+      onPress={() => {
+        Skills.push(txtSkill);
+        setSkill("");
+
+
+      }}/>
 
     </View>
+
+    <View style={styles.skillContainer}> 
+
+
+    </View>
+      </ScrollView>
+      </SafeAreaView>
+      </View>
   )
 }
 
@@ -383,38 +421,44 @@ radioGroup: {
 },
 
 container: {
-   width: 350,
-   height: 350,
-   alignContent: 'center'
+  width: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
 },
 
 viewImage: {
-   width: 350,
-   height: 350,
-   alignContent: 'center'
+  width: 150,
+  height: 150,
+  resizeMode: 'contain',
+},
+
+bannerContainer: {
+  width: '100%',
+  alignItems: 'center',
 },
 
 bannerImg: {
- height: 350,
- alignContent: 'center',
+  width: '100%',
+  height: 200,
+  resizeMode: 'contain',
 },
- 
+
 inputContainer: {
- flex:1,
- flexDirection: 'row',
- justifyContent: 'space-between',
- alignItems: 'center',
- marginBottom: 25,
- borderBottomWidth: 1,
- borderBottomColor: '#0000',
+  flex: 1,
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: 25,
+  borderBottomWidth: 1,
+  borderBottomColor: '#f730c5',
 },
 
 textInput: {
   borderWidth: 1,
-  borderColor: '#0000',
+  borderColor: '#000',
   width: '70%',
-  margin:10,
-  padding: 5,
+  margin: 10,
+  padding: 5
 },
 
 appContainer: {
@@ -423,19 +467,24 @@ appContainer: {
   paddingHorizontal: 15,
 },
 
-skillcontainer: {
-  flex: 5,
+skillContainer: {
+  flex: 5
 },
 
-skillTest: {
+skillText: {
   fontSize: 15,
   marginVertical: 5,
   borderBlockColor: 'black',
-  borderBottomWidth: 1,
+  borderBottomWidth: 1
 },
 
-});
 
+
+
+
+
+
+});
 
 
 
